@@ -1,3 +1,6 @@
+let humanScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
     const choices = ['rock', 'paper', 'scissors'];
     const randomIndex = Math.floor(Math.random() * choices.length);
@@ -13,30 +16,43 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
-    let humanScore = 0;
-    let computerScore = 0;
+    const resultText = document.getElementById("resultText");
+    const playerScoreElement = document.getElementById("playerScore");
+    const computerScoreElement = document.getElementById("computerScore");
 
-    if (humanChoice === computerChoice) {
-        console.log(`It's a tie! You both chose ${humanChoice}.`);
+    if(humanScore === 5 || computerScore === 5) {
+        resultText.textContent = humanScore === 5 ? "You win the game!" : "Computer wins the game!";
+        return;
+    }
+    else if (humanChoice === computerChoice) {
+        resultText.textContent = `It's a tie! You both chose ${humanChoice}.`;
     } else if (
         (humanChoice === 'rock' && computerChoice === 'scissors') ||
         (humanChoice === 'paper' && computerChoice === 'rock') ||
         (humanChoice === 'scissors' && computerChoice === 'paper')
     ) {
-        console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+        resultText.textContent = `You win! ${humanChoice} beats ${computerChoice}.`;
         humanScore++;
+        playerScoreElement.textContent = `Player Score: ${humanScore}`;
     } else {
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+        resultText.textContent = `You lose! ${computerChoice} beats ${humanChoice}.`;
         computerScore++;
-    }
-  }
-
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
+        computerScoreElement.textContent = `Computer Score: ${computerScore}`;
     }
 }
 
-playGame();
+function playGame() {
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+}
+
+const buttons = document.querySelectorAll("button");
+
+// we use the .forEach method to iterate through each button
+buttons.forEach((button) => {
+  // and for each one we add a 'click' listener
+  button.addEventListener("click", () => {
+    playRound(button.id, getComputerChoice());
+  });
+});
