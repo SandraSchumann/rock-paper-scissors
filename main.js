@@ -1,6 +1,3 @@
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
-
 function getComputerChoice() {
     const choices = ['rock', 'paper', 'scissors'];
     const randomIndex = Math.floor(Math.random() * choices.length);
@@ -16,6 +13,9 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
+    let humanScore = 0;
+    let computerScore = 0;
+
     if (humanChoice === computerChoice) {
         console.log(`It's a tie! You both chose ${humanChoice}.`);
     } else if (
@@ -32,9 +32,6 @@ function playRound(humanChoice, computerChoice) {
   }
 
 function playGame() {
-    const humanScore = 0;
-    const cumputerScore = 0;
-
     for (let i = 0; i < 5; i++) {
         const humanSelection = getHumanChoice();
         const computerSelection = getComputerChoice();
